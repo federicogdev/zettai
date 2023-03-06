@@ -6,7 +6,6 @@ import {
   Burger,
   Paper,
   Transition,
-  Text,
   rem,
   Avatar,
 } from "@mantine/core";

@@ -2,7 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 import { useContext } from "react";
 import { animesApi } from "../api";
 import { TopAnimesContext } from "../context/top-animes-context";
-import { JikanResponse, Anime } from "../types/api";
 import {
   Select,
   Stack,
@@ -12,11 +11,10 @@ import {
   Center,
   Loader,
   Grid,
-  AspectRatio,
-  Image,
-  Title,
 } from "@mantine/core";
 import LargeAnimeTile from "../components/large-anime-tile";
+import { JikanResponse } from "../types/api/response";
+import { Anime } from "../types/api/anime";
 
 type Props = {};
 
@@ -106,7 +104,7 @@ const AnimesPage = (props: Props) => {
             withEdges
             total={animesLengthData.pagination?.last_visible_page!}
             siblings={3}
-            defaultValue={1}
+            defaultValue={topAnimesPage}
             onChange={(e) => {
               setTopAnimesPage(e);
             }}

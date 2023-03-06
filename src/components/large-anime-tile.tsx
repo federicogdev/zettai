@@ -1,6 +1,7 @@
 import { Grid, Text, Flex, Image, Paper } from "@mantine/core";
 import React from "react";
-import { Anime } from "../types/api";
+import { Link } from "react-router-dom";
+import { Anime } from "../types/api/anime";
 import { shortenNumber } from "../utils/shorten-number";
 
 type ILargeAnimeTileProps = {
@@ -11,12 +12,14 @@ const LargeAnimeTile = ({ anime }: ILargeAnimeTileProps) => {
   return (
     <Grid align="center">
       <Grid.Col xs={12} sm={3}>
-        <Image
-          src={anime.images.jpg.image_url}
-          radius={7}
-          fit="fill"
-          w="100%"
-        />
+        <Link to={`/animes/${anime.mal_id}`}>
+          <Image
+            src={anime.images.jpg.image_url}
+            radius={7}
+            fit="fill"
+            w="100%"
+          />
+        </Link>
       </Grid.Col>
       <Grid.Col xs={12} sm={9}>
         <Grid gutter={10}>
