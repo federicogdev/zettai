@@ -11,7 +11,7 @@ const AnimeReviewCard = ({ review }: IAnimeReviewCardProps) => {
   const [showMore, setShowMore] = useState(false);
   const hasMore = review.review.length < 450;
   return (
-    <Card radius="md">
+    <Card radius="md" p="lg">
       <Group position="apart" mb={10}>
         <Center>
           <Avatar
@@ -38,7 +38,7 @@ const AnimeReviewCard = ({ review }: IAnimeReviewCardProps) => {
           : `${review.review.substring(0, 450)}...`}
         {!hasMore && (
           <Text color="primary" onClick={() => setShowMore(!showMore)}>
-            {showMore ? "Read Less" : "Read More"}
+            {showMore ? "Show Less" : "Read More"}
           </Text>
         )}
       </Text>

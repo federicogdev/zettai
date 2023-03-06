@@ -64,17 +64,17 @@ const AnimeDetailsHero = ({ anime }: IAnimeDetailsHeroProps) => {
           <Grid.Col xs={12}>
             <Flex>
               <Paper bg="primary" px={7} mr={3}>
-                <Text>Ranked: #{anime.rank ? anime.rank : 0}</Text>
+                <Text fw={600}>Ranked: #{anime.rank ? anime.rank : 0}</Text>
               </Paper>
 
               <Paper bg="primary" px={7} mr={3}>
-                <Text>
+                <Text fw={600}>
                   Popularity: #{anime.popularity ? anime.popularity : 0}
                 </Text>
               </Paper>
 
               <Paper bg="primary" px={7} mr={3}>
-                <Text>
+                <Text fw={600}>
                   {shortenNumber(anime.members ? anime.members : 0)} members
                 </Text>
               </Paper>

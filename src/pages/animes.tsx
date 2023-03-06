@@ -1,39 +1,41 @@
+import { Flex, Grid, Pagination, Stack, Text } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
-import { useContext } from "react";
+import React from "react";
+import { useSearchParams } from "react-router-dom";
 import { animesApi } from "../api";
-import { TopAnimesContext } from "../context/top-animes-context";
-import {
-  Select,
-  Stack,
-  Flex,
-  Text,
-  Pagination,
-  Center,
-  Loader,
-  Grid,
-} from "@mantine/core";
 import LargeAnimeTile from "../components/large-anime-tile";
-import { JikanResponse } from "../types/api/response";
 import { Anime } from "../types/api/anime";
+import { JikanResponse } from "../types/api/response";
 
 type Props = {};
 
 const AnimesPage = (props: Props) => {
-  const {
-    topAnimesPage,
-    topAnimesFilter,
-    setTopAnimesFilter,
-    setTopAnimesPage,
-  } = useContext(TopAnimesContext);
+  const [searchParams] = useSearchParams();
 
-  const fetchAnimesLength = async (filter: string) =>
+  const query = searchParams.get("q") || "";
+  const genre = searchParams.get("genres") || "";
+  const producers = searchParams.get("producers") || "";
+
+  const fetchAnimesLength = async (
+    _query: string,
+    _genre: string,
+    _producers: string
+  ) =>
     animesApi
-      .get(`/top/anime?filter=${filter}&limit=10`)
+      .get(
+        `/anime?q=${_query}&genres=${_genre}&producers=${_producers}&limit=1`
+      )
       .then((res) => res.data);
 
-  const fetchAnimes = async (filter: string, page: number) =>
+  const fetchAnimes = async (
+    _query: string,
+    _genre: string,
+    _producers: string
+  ) =>
     animesApi
-      .get(`/top/anime?filter=${filter}&page=${page}&limit=10`)
+      .get(
+        `/anime?q=${_query}&genres=${_genre}&producers=${_producers}&limit=10`
+      )
       .then((res) => res.data);
 
   const {
@@ -41,8 +43,8 @@ const AnimesPage = (props: Props) => {
     isError: isAnimesLengthDataError,
     data: animesLengthData,
   } = useQuery<JikanResponse<Anime[]>>({
-    queryKey: [`${topAnimesFilter}AnimesFilter`, topAnimesFilter],
-    queryFn: () => fetchAnimesLength(topAnimesFilter!),
+    queryKey: [`${query}${genre}${producers}AnimesLength`],
+    queryFn: () => fetchAnimes(query, genre, producers),
   });
 
   const {
@@ -50,44 +52,12 @@ const AnimesPage = (props: Props) => {
     isError: isAnimesDataError,
     data: animesData,
   } = useQuery<JikanResponse<Anime[]>>({
-    queryKey: [
-      `${topAnimesFilter}AnimesPage${topAnimesPage}`,
-      topAnimesFilter,
-      topAnimesPage,
-    ],
-    queryFn: () => fetchAnimes(topAnimesFilter!, topAnimesPage!),
-    enabled: !!animesLengthData,
+    queryKey: [`${query}${genre}${producers}Animes`],
+    queryFn: () => fetchAnimes(query, genre, producers),
   });
 
   return (
     <Stack py={20} spacing={50}>
-      <Flex justify="space-between" align="center">
-        <Text fw={700} fz="xl">
-          Results: {animesLengthData?.pagination?.items?.total}
-        </Text>
-
-        <Select
-          maw="30%"
-          value={topAnimesFilter}
-          onChange={(e) => {
-            setTopAnimesFilter(e!);
-            setTopAnimesPage(1);
-          }}
-          data={[
-            { value: "airing", label: "Airing" },
-            { value: "upcoming", label: "Upcoming" },
-            { value: "bypopularity", label: "Popular" },
-            { value: "favorite", label: "Favourites" },
-          ]}
-        />
-      </Flex>
-
-      {isAnimesDataLoading && (
-        <Center p={40}>
-          <Loader />
-        </Center>
-      )}
-
       {animesData && (
         <Grid gutter={20}>
           {animesData.data.map((anime) => (
@@ -98,19 +68,17 @@ const AnimesPage = (props: Props) => {
         </Grid>
       )}
 
-      {animesLengthData && !isAnimesLengthDataLoading && (
-        <Flex justify="center">
-          <Pagination
-            withEdges
-            total={animesLengthData.pagination?.last_visible_page!}
-            siblings={3}
-            defaultValue={topAnimesPage}
-            onChange={(e) => {
-              setTopAnimesPage(e);
-            }}
-          />
-        </Flex>
-      )}
+      <Flex justify="center">
+        <Pagination
+          withEdges
+          total={animesLengthData?.pagination?.last_visible_page!}
+          siblings={3}
+          // defaultValue={topAnimesPage}
+          // onChange={(e) => {
+          //   setTopAnimesPage(e);
+          // }}
+        />
+      </Flex>
     </Stack>
   );
 };

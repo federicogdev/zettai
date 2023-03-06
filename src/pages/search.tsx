@@ -14,21 +14,16 @@ type Props = {};
 const SearchPage = (props: Props) => {
   const theme = useMantineTheme();
   const navigate = useNavigate(); // RRDv6
-  const [data, setData] = useState(false);
-  // const {status, data, error, refetch} = useQuery(myKey, fetchData, {
-  //   manual: true,
-  // });
+  const [query, setQuery] = useState("");
 
-  // const handleSubmit = (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   refetch()
-  // };
   return (
     <Stack py={20} spacing={50}>
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          setData(true);
+          if (query !== "") {
+            navigate(`/anime?q=${query}`);
+          }
         }}
       >
         <TextInput
@@ -47,14 +42,16 @@ const SearchPage = (props: Props) => {
           }
           placeholder="Search questions"
           rightSectionWidth={42}
+          onChange={(e) => setQuery(e.target.value)}
+          value={query}
         />
       </form>
 
-      {data ? (
+      {/* {data ? (
         <Box bg="red" w="100%" h="100vh"></Box>
       ) : (
         <Box bg="yellow" w="100%" h="100vh"></Box>
-      )}
+      )} */}
     </Stack>
   );
 };

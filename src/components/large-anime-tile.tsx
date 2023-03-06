@@ -12,7 +12,7 @@ const LargeAnimeTile = ({ anime }: ILargeAnimeTileProps) => {
   return (
     <Grid align="center">
       <Grid.Col xs={12} sm={3}>
-        <Link to={`/animes/${anime.mal_id}`}>
+        <Link to={`/anime/${anime.mal_id}`}>
           <Image
             src={anime.images.jpg.image_url}
             radius={7}
@@ -45,18 +45,18 @@ const LargeAnimeTile = ({ anime }: ILargeAnimeTileProps) => {
             <Flex>
               {anime.episodes > 0 && (
                 <Paper bg="primary" px={7} mr={3}>
-                  <Text>{anime.episodes} episodes</Text>
+                  <Text fw={600}>{anime.episodes} episodes</Text>
                 </Paper>
               )}
 
               {anime.type && (
                 <Paper bg="primary" px={7} mr={3}>
-                  <Text>{anime.type}</Text>
+                  <Text fw={600}>{anime.type}</Text>
                 </Paper>
               )}
 
               <Paper bg="primary" px={7} mr={3}>
-                <Text>{shortenNumber(anime.members)} members</Text>
+                <Text fw={600}>{shortenNumber(anime.members)} members</Text>
               </Paper>
             </Flex>
           </Grid.Col>

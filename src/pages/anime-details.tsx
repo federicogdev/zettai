@@ -10,9 +10,12 @@ import {
   Card,
 } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
+import Error from "../components/error";
+
 import { Link, useParams } from "react-router-dom";
 import { animesApi } from "../api";
 import AnimeDetailsHero from "../components/anime-details/anime-details-hero";
+import AnimeDetailsOverview from "../components/anime-details/anime-details-overview";
 import AnimeReviewCard from "../components/anime-review-card";
 import { AnimeReview } from "../types/api/anime";
 import { Anime } from "../types/api/anime/anime.model";
@@ -49,59 +52,47 @@ const AnimeDetailsPage = (props: Props) => {
 
   return (
     <Stack py={20} spacing={50}>
-      {isAnimesDetailsLoading && isAnimesReviewsLoading && (
+      {isAnimesDetailsLoading || isAnimesReviewsLoading ? (
         <Center p={40}>
           <Loader />
         </Center>
-      )}
-
-      {animesDetails && (
+      ) : isAnimesDetailsError || isAnimesReviewsError ? (
+        <Center mih="90vh">
+          <Error />
+        </Center>
+      ) : (
         <Grid gutter={20}>
           <Grid.Col xs={12}>
             <AnimeDetailsHero anime={animesDetails.data} />
           </Grid.Col>
 
           <Grid.Col xs={12}>
-            <Text fw={700} fz="xxl">
-              Synopsis
-            </Text>
+            <AnimeDetailsOverview anime={animesDetails.data} />
           </Grid.Col>
 
-          <Grid.Col xs={12}>
-            <Text>
-              {animesDetails.data.synopsis
-                ? animesDetails.data.synopsis
-                : "Not currently available"}
-            </Text>
-          </Grid.Col>
+          {animesReviews.data.length > 0 && (
+            <Grid.Col xs={12}>
+              <Flex align="center" justify="space-between" mb={20}>
+                <Text fw={700} fz="xxl">
+                  Reviews
+                </Text>
 
-          {animesReviews && !!animesReviews.data.length && (
-            <>
-              <Grid.Col xs={12}>
-                <Flex align="center" justify="space-between">
-                  <Text fw={700} fz="xxl">
-                    Reviews
-                  </Text>
-
-                  <Text
-                    fw={700}
-                    fz="xl"
-                    color="primary"
-                    component={Link}
-                    to={`/animes/${id}/reviews`}
-                  >
-                    Read More
-                  </Text>
-                </Flex>
-              </Grid.Col>
-              <Grid.Col xs={12}>
-                <Stack>
-                  {animesReviews.data?.slice(0, 5).map((review) => (
-                    <AnimeReviewCard review={review} />
-                  ))}
-                </Stack>
-              </Grid.Col>
-            </>
+                <Text
+                  fw={700}
+                  fz="xl"
+                  color="primary"
+                  component={Link}
+                  to={`/anime/${id}/reviews`}
+                >
+                  Read More
+                </Text>
+              </Flex>
+              <Stack>
+                {animesReviews.data?.slice(0, 5).map((review) => (
+                  <AnimeReviewCard review={review} />
+                ))}
+              </Stack>
+            </Grid.Col>
           )}
         </Grid>
       )}

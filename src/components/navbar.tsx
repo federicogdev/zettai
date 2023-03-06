@@ -103,7 +103,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 const links = [
-  { link: "/animes", label: "Animes" },
+  { link: "/top-animes", label: "Top Animes" },
   { link: "/search", label: "Search" },
 ];
 
@@ -117,7 +117,7 @@ const Navbar = () => {
       key={link.label}
       to={link.link}
       className={cx(classes.link, {
-        [classes.linkActive]: `/${pathname.split("/")[1]}` === link.link,
+        [classes.linkActive]: pathname === link.link,
       })}
     >
       {link.label}
