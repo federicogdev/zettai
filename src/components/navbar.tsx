@@ -92,6 +92,7 @@ const useStyles = createStyles((theme) => ({
 
   linkActive: {
     "&, &:hover": {
+      fontWeight: 700,
       backgroundColor: theme.fn.variant({
         variant: "dark",
         color: theme.colors.teal[0],
@@ -128,7 +129,7 @@ const Navbar = () => {
     <Header height={HEADER_HEIGHT} className={classes.root}>
       <Container className={classes.header} size="md">
         <Link to="/">
-          <Avatar color="blue" radius="xl" size="md">
+          <Avatar color="primary" radius="xl" size="md">
             <RiMovieFill size="1.5rem" />
           </Avatar>
         </Link>
