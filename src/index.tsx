@@ -6,7 +6,7 @@ import { BrowserRouter } from "react-router-dom";
 import CustomFonts from "./theme/fonts";
 import Navbar from "./components/navbar";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
-import { TopAnimesContextProvider } from "./context/top-animes-context";
+import { AnimesPaginationContextProvider } from "./context/animes-pagination-context";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -22,7 +22,7 @@ const queryClient = new QueryClient({
 
 root.render(
   // <React.StrictMode>
-  <TopAnimesContextProvider>
+  <AnimesPaginationContextProvider>
     <QueryClientProvider client={queryClient}>
       <MantineProvider
         withGlobalStyles
@@ -76,6 +76,6 @@ root.render(
         </BrowserRouter>
       </MantineProvider>
     </QueryClientProvider>
-  </TopAnimesContextProvider>
+  </AnimesPaginationContextProvider>
   // </React.StrictMode>
 );

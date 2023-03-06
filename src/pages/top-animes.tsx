@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useContext } from "react";
 import { animesApi } from "../api";
-import { TopAnimesContext } from "../context/top-animes-context";
+import { AnimesPaginationContext } from "../context/animes-pagination-context";
 import {
   Select,
   Stack,
@@ -15,6 +15,7 @@ import {
 import LargeAnimeTile from "../components/large-anime-tile";
 import { JikanResponse } from "../types/api/response";
 import { Anime } from "../types/api/anime";
+import Error from "../components/error";
 
 type Props = {};
 
@@ -24,7 +25,7 @@ const TopAnimesPage = (props: Props) => {
     topAnimesFilter,
     setTopAnimesFilter,
     setTopAnimesPage,
-  } = useContext(TopAnimesContext);
+  } = useContext(AnimesPaginationContext);
 
   const fetchAnimesLength = async (filter: string) =>
     animesApi
@@ -81,15 +82,17 @@ const TopAnimesPage = (props: Props) => {
         />
       </Flex>
 
-      {isAnimesDataLoading && (
+      {isAnimesDataLoading ? (
         <Center p={40}>
           <Loader />
         </Center>
-      )}
-
-      {animesData && (
+      ) : isAnimesLengthDataError || isAnimesDataError ? (
+        <Center p={40}>
+          <Error />
+        </Center>
+      ) : (
         <Grid gutter={20}>
-          {animesData.data.map((anime) => (
+          {animesData?.data.map((anime) => (
             <Grid.Col key={anime.mal_id} mb={30}>
               <LargeAnimeTile anime={anime} />
             </Grid.Col>

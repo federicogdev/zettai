@@ -1,35 +1,42 @@
 import React, { createContext, FC, ReactNode, useState } from "react";
 
-interface ITopAnimesContextProviderProps {
+interface IAnimesPaginationContextProviderProps {
   children: ReactNode;
 }
 
-type TopAnimesContextState = {
+type AnimesPaginationContextState = {
   topAnimesFilter: string | null;
   topAnimesPage: number;
+  queryAnimesPage: number;
   setTopAnimesFilter: (filter: string) => void;
   setTopAnimesPage: (page: number) => void;
+  setQueryAnimesPage: (page: number) => void;
 };
 
-const contextDefaultValue: TopAnimesContextState = {
+const contextDefaultValue: AnimesPaginationContextState = {
   topAnimesFilter: "airing",
   topAnimesPage: 1,
+  queryAnimesPage: 1,
   setTopAnimesFilter: () => {},
   setTopAnimesPage: () => {},
+  setQueryAnimesPage: () => {},
 };
 
-export const TopAnimesContext =
-  createContext<TopAnimesContextState>(contextDefaultValue);
+export const AnimesPaginationContext =
+  createContext<AnimesPaginationContextState>(contextDefaultValue);
 
-export const TopAnimesContextProvider: FC<ITopAnimesContextProviderProps> = ({
-  children,
-}) => {
+export const AnimesPaginationContextProvider: FC<
+  IAnimesPaginationContextProviderProps
+> = ({ children }) => {
   const [topAnimesFilter, _setTopAnimesFilter] = useState(
     contextDefaultValue.topAnimesFilter
   );
 
   const [topAnimesPage, _setTopAnimesPage] = useState(
     contextDefaultValue.topAnimesPage
+  );
+  const [queryAnimesPage, _setQueryAnimesPage] = useState(
+    contextDefaultValue.queryAnimesPage
   );
 
   const setTopAnimesFilter = (filter: string) => {
@@ -39,16 +46,22 @@ export const TopAnimesContextProvider: FC<ITopAnimesContextProviderProps> = ({
   const setTopAnimesPage = (page: number) => {
     _setTopAnimesPage(page);
   };
+
+  const setQueryAnimesPage = (page: number) => {
+    _setQueryAnimesPage(page);
+  };
   return (
-    <TopAnimesContext.Provider
+    <AnimesPaginationContext.Provider
       value={{
         topAnimesFilter,
         topAnimesPage,
+        queryAnimesPage,
         setTopAnimesFilter,
         setTopAnimesPage,
+        setQueryAnimesPage,
       }}
     >
       {children}
-    </TopAnimesContext.Provider>
+    </AnimesPaginationContext.Provider>
   );
 };

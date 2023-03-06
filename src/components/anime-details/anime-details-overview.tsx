@@ -8,8 +8,9 @@ import {
   Grid,
   Paper,
 } from "@mantine/core";
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AnimesPaginationContext } from "../../context/animes-pagination-context";
 import { Anime } from "../../types/api/anime";
 
 type IAnimeDetailsOverviewProps = {
@@ -17,6 +18,7 @@ type IAnimeDetailsOverviewProps = {
 };
 
 const AnimeDetailsOverview = ({ anime }: IAnimeDetailsOverviewProps) => {
+  const { setQueryAnimesPage } = useContext(AnimesPaginationContext);
   return (
     <Stack>
       <Stack>
@@ -55,8 +57,9 @@ const AnimeDetailsOverview = ({ anime }: IAnimeDetailsOverviewProps) => {
                 px={7}
                 mr={3}
                 mb={5}
-                // component={Link}
-                // to={`/producers/${producer.mal_id}`}
+                component={Link}
+                to={`/anime?producers=${producer.mal_id}`}
+                onClick={() => setQueryAnimesPage(1)}
                 key={producer.mal_id}
               >
                 <Text>{producer.name}</Text>
@@ -79,6 +82,7 @@ const AnimeDetailsOverview = ({ anime }: IAnimeDetailsOverviewProps) => {
                 mr={3}
                 component={Link}
                 to={`/anime?genres=${genre.mal_id}`}
+                onClick={() => setQueryAnimesPage(1)}
                 key={genre.mal_id}
               >
                 <Text>{genre.name}</Text>
