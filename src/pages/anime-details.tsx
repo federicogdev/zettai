@@ -20,6 +20,7 @@ import AnimeReviewCard from "../components/anime-review-card";
 import { AnimeReview } from "../types/api/anime";
 import { Anime } from "../types/api/anime/anime.model";
 import { JikanResponse } from "../types/api/response";
+import axios from "axios";
 
 type Props = {};
 
@@ -30,7 +31,9 @@ const AnimeDetailsPage = (props: Props) => {
     animesApi.get(`/anime/${_id}`).then((res) => res.data);
 
   const fetchAnimeReviews = async (_id: string) =>
-    animesApi.get(`/anime/${_id}/reviews`).then((res) => res.data);
+    axios
+      .get(`https://api.jikan.moe/v4/anime/${_id}/reviews`)
+      .then((res) => res.data);
 
   const {
     isLoading: isAnimesDetailsLoading,
@@ -48,11 +51,23 @@ const AnimeDetailsPage = (props: Props) => {
   } = useQuery<JikanResponse<AnimeReview[]>>({
     queryKey: [`${id}AnimeReviews`, id],
     queryFn: () => fetchAnimeReviews(id!),
+    enabled: !!animesDetails?.data.approved,
   });
+
+  if (isAnimesDetailsLoading || isAnimesReviewsLoading) {
+    <Center p={40}>
+      <Loader />
+    </Center>;
+  }
+  if (isAnimesDetailsError || isAnimesReviewsError) {
+    <Center p={40}>
+      <Error />
+    </Center>;
+  }
 
   return (
     <Stack py={20} spacing={50}>
-      {isAnimesDetailsLoading || isAnimesReviewsLoading ? (
+      {/* {isAnimesDetailsLoading || isAnimesReviewsLoading ? (
         <Center p={40}>
           <Loader />
         </Center>
@@ -60,42 +75,46 @@ const AnimeDetailsPage = (props: Props) => {
         <Center mih="90vh">
           <Error />
         </Center>
-      ) : (
-        <Grid gutter={20}>
-          <Grid.Col xs={12}>
-            <AnimeDetailsHero anime={animesDetails.data} />
-          </Grid.Col>
-
-          <Grid.Col xs={12}>
-            <AnimeDetailsOverview anime={animesDetails.data} />
-          </Grid.Col>
-
-          {animesReviews.data.length > 0 && (
+      ) : ( */}
+      <Grid gutter={20}>
+        {animesDetails && (
+          <>
             <Grid.Col xs={12}>
-              <Flex align="center" justify="space-between" mb={20}>
-                <Text fw={700} fz="xxl">
-                  Reviews
-                </Text>
-
-                <Text
-                  fw={700}
-                  fz="xl"
-                  color="primary"
-                  component={Link}
-                  to={`/anime/${id}/reviews`}
-                >
-                  Read More
-                </Text>
-              </Flex>
-              <Stack>
-                {animesReviews.data?.slice(0, 5).map((review, key) => (
-                  <AnimeReviewCard review={review} key={review.mal_id} />
-                ))}
-              </Stack>
+              <AnimeDetailsHero anime={animesDetails.data} />
             </Grid.Col>
-          )}
-        </Grid>
-      )}
+
+            <Grid.Col xs={12}>
+              <AnimeDetailsOverview anime={animesDetails.data} />
+            </Grid.Col>
+          </>
+        )}
+
+        {animesReviews && animesReviews.data.length > 0 && (
+          <Grid.Col xs={12}>
+            <Flex align="center" justify="space-between" mb={20}>
+              <Text fw={700} fz="xxl">
+                Reviews
+              </Text>
+
+              <Text
+                fw={700}
+                fz="xl"
+                color="primary"
+                component={Link}
+                to={`/anime/${id}/reviews`}
+              >
+                Read More
+              </Text>
+            </Flex>
+            <Stack>
+              {animesReviews.data?.slice(0, 5).map((review, key) => (
+                <AnimeReviewCard review={review} key={review.mal_id} />
+              ))}
+            </Stack>
+          </Grid.Col>
+        )}
+      </Grid>
+      {/* )} */}
     </Stack>
   );
 };

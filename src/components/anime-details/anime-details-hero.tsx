@@ -78,6 +78,12 @@ const AnimeDetailsHero = ({ anime }: IAnimeDetailsHeroProps) => {
                   {shortenNumber(anime.members ? anime.members : 0)} members
                 </Text>
               </Paper>
+
+              <Paper bg="primary" px={7} mr={3}>
+                <Text fw={600}>
+                  {anime.approved ? "Approved" : "Not Approved"}
+                </Text>
+              </Paper>
             </Flex>
           </Grid.Col>
 

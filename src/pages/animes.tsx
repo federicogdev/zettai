@@ -47,7 +47,7 @@ const AnimesPage = (props: Props) => {
   ) =>
     animesApi
       .get(
-        `/anime?q=${_query}&genres=${_genre}&producers=${_producers}&page=${_page}&limit=10&order_by=popularity`
+        `/anime?q=${_query}&genres=${_genre}&producers=${_producers}&page=${_page}&limit=10&order_by=members&sort=desc`
       )
       .then((res) => res.data);
 
@@ -82,7 +82,6 @@ const AnimesPage = (props: Props) => {
 
   return (
     <Stack py={20} spacing={50}>
-      <Text>Q = {query}</Text>
       {isAnimesDataLoading ? (
         <Center p={40}>
           <Loader />

@@ -8,6 +8,8 @@ import {
   Transition,
   rem,
   Avatar,
+  Text,
+  Flex,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useLocation, Link } from "react-router-dom";
@@ -127,11 +129,20 @@ const Navbar = () => {
   return (
     <Header height={HEADER_HEIGHT} className={classes.root}>
       <Container className={classes.header} size="md">
-        <Link to="/">
-          <Avatar color="primary" radius="xl" size="md">
-            <RiMovieFill size="1.5rem" />
-          </Avatar>
-        </Link>
+        <Flex align="center">
+          <Avatar
+            radius="xl"
+            size="md"
+            src="/logo.jpg"
+            alt=""
+            component={Link}
+            to="/"
+            mr={10}
+          />
+          <Text fw={700} color="primary">
+            ZETTAI
+          </Text>
+        </Flex>
         <Group spacing={5} className={classes.links}>
           {items}
         </Group>
