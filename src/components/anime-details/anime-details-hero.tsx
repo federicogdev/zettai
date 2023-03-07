@@ -1,15 +1,6 @@
-import {
-  Center,
-  Flex,
-  Grid,
-  Loader,
-  Paper,
-  Stack,
-  Text,
-  Image,
-} from "@mantine/core";
-import dayjs from "dayjs";
+import { Center, Flex, Grid, Paper, Stack, Text, Image } from "@mantine/core";
 import { BsStarFill } from "react-icons/bs";
+import { Link } from "react-router-dom";
 import { Anime } from "../../types/api/anime";
 import { shortenNumber } from "../../utils/shorten-number";
 
@@ -19,82 +10,82 @@ type IAnimeDetailsHeroProps = {
 
 const AnimeDetailsHero = ({ anime }: IAnimeDetailsHeroProps) => {
   return (
-    <Grid align="center">
+    <Grid align="center" mb={10}>
       <Grid.Col xs={12} sm={3}>
         <Image
-          src={anime.images.jpg.image_url}
+          src={anime.images.jpg.large_image_url}
           radius={7}
           fit="fill"
           w="100%"
         />
       </Grid.Col>
+
       <Grid.Col xs={12} sm={9}>
-        <Grid gutter={10}>
-          <Grid.Col xs={12} pb={0}>
-            <Text fw={700} fz="xxl">
-              {anime.title}
-            </Text>
-          </Grid.Col>
+        <Stack>
+          <Text fw={700} fz="xxl" lh={1.2}>
+            {anime.title}
+          </Text>
 
           {anime.title_japanese && (
-            <Grid.Col xs={12}>
-              <Text fz="xl" fs="italic">
-                {anime.title_japanese}
-              </Text>
-            </Grid.Col>
+            // <Grid.Col xs={12}>
+            <Text fz="xl" fs="italic">
+              {anime.title_japanese}
+            </Text>
+            // </Grid.Col>
           )}
+
+          <Text lineClamp={5} fz="md">
+            Aired from {anime.aired.string}
+          </Text>
+
+          <Flex wrap="wrap">
+            <Paper bg="primary" px={7} mr={3} mb={3}>
+              <Text>Ranked: #{anime.rank ? anime.rank : 0}</Text>
+            </Paper>
+
+            <Paper bg="primary" px={7} mr={3} mb={3}>
+              <Text>
+                Popularity: #{anime.popularity ? anime.popularity : 0}
+              </Text>
+            </Paper>
+
+            <Paper bg="primary" px={7} mr={3} mb={3}>
+              <Text>
+                {shortenNumber(anime.members ? anime.members : 0)} members
+              </Text>
+            </Paper>
+          </Flex>
+
+          <Flex wrap="wrap">
+            {anime.genres.map((genre) => (
+              <Paper
+                bg="primary"
+                px={7}
+                mr={3}
+                mb={5}
+                component={Link}
+                to={`/anime?genres=${genre.mal_id}`}
+              >
+                <Text>{genre.name}</Text>
+              </Paper>
+            ))}
+          </Flex>
 
           {anime.score && (
-            <Grid.Col xs={12}>
-              <Flex align="center">
-                <Text fz="lg">{anime.score} </Text>
-                <BsStarFill
-                  style={{
-                    color: "yellow",
-                    fontSize: "1rem",
-                    marginRight: ".3rem",
-                    marginLeft: ".3rem",
-                  }}
-                />
-                <Text fz="lg">by {shortenNumber(anime.scored_by)} users</Text>
-              </Flex>
-            </Grid.Col>
-          )}
-
-          <Grid.Col xs={12}>
-            <Flex>
-              <Paper bg="primary" px={7} mr={3}>
-                <Text fw={600}>Ranked: #{anime.rank ? anime.rank : 0}</Text>
-              </Paper>
-
-              <Paper bg="primary" px={7} mr={3}>
-                <Text fw={600}>
-                  Popularity: #{anime.popularity ? anime.popularity : 0}
-                </Text>
-              </Paper>
-
-              <Paper bg="primary" px={7} mr={3}>
-                <Text fw={600}>
-                  {shortenNumber(anime.members ? anime.members : 0)} members
-                </Text>
-              </Paper>
-
-              <Paper bg="primary" px={7} mr={3}>
-                <Text fw={600}>
-                  {anime.approved ? "Approved" : "Not Approved"}
-                </Text>
-              </Paper>
+            <Flex align="center">
+              <Text fz="lg">{anime.score} </Text>
+              <BsStarFill
+                style={{
+                  color: "yellow",
+                  fontSize: "1rem",
+                  marginRight: ".3rem",
+                  marginLeft: ".3rem",
+                }}
+              />
+              <Text fz="lg">by {shortenNumber(anime.scored_by)} users</Text>
             </Flex>
-          </Grid.Col>
-
-          <Grid.Col xs={12}>
-            <Text lineClamp={5} fz="md">
-              {dayjs(anime.aired.from).format("DD MMM, YYYY")}{" "}
-              {anime.aired.to &&
-                `to ${dayjs(anime.aired.to).format("DD MMM, YYYY")}`}
-            </Text>
-          </Grid.Col>
-        </Grid>
+          )}
+        </Stack>
       </Grid.Col>
     </Grid>
   );

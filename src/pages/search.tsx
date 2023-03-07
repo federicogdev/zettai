@@ -11,7 +11,7 @@ import {
   TextInput,
   useMantineTheme,
 } from "@mantine/core";
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
@@ -45,14 +45,14 @@ const SearchPage = (props: Props) => {
   });
 
   return (
-    <Stack py={20} spacing={30}>
+    <Stack py={20} spacing={30} mih="80vh">
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          if (query !== "") {
-            setQueryAnimesPage(1);
-            navigate(`/anime?q=${query.replace(/\s+/g, `+`)}`);
-          }
+          if (query === "") return;
+
+          setQueryAnimesPage(1);
+          navigate(`/anime?q=${query.replace(/\s+/g, `+`)}`);
         }}
       >
         <TextInput
@@ -84,7 +84,7 @@ const SearchPage = (props: Props) => {
         spacing="md"
         breakpoints={[
           { maxWidth: "md", cols: 5, spacing: "md" },
-          { maxWidth: "sm", cols: 3, spacing: "sm" },
+          { maxWidth: "sm", cols: 4, spacing: "sm" },
           { maxWidth: "xs", cols: 2, spacing: "sm" },
         ]}
       >
@@ -92,29 +92,30 @@ const SearchPage = (props: Props) => {
           .sort((a, b) => {
             return b.count - a.count;
           })
-          .map((genre) => (
-            <Card
-              key={genre.mal_id}
-              p={10}
-              component={Link}
-              to={`/anime?genres=${genre.mal_id}`}
-              onClick={() => {
-                setQueryAnimesPage(1);
-              }}
-            >
-              <Flex justify="space-between" align="center">
-                <Box>
-                  <Text lineClamp={1} fw={700}>
-                    {genre.name}
-                  </Text>
-                  <Text size="sm">{genre.count} titles</Text>
-                </Box>
-                <ActionIcon color="primary">
-                  <FaChevronRight style={{ height: ".7em" }} />
-                </ActionIcon>
-              </Flex>
-            </Card>
-          ))}
+          .map(
+            (genre, i) =>
+              i < 20 && (
+                <Card
+                  key={genre.mal_id}
+                  p={10}
+                  component={Link}
+                  to={`/anime?genres=${genre.mal_id}`}
+                  onClick={() => {
+                    setQueryAnimesPage(1);
+                  }}
+                >
+                  <Flex justify="space-between" align="center">
+                    <Box>
+                      <Text lineClamp={1} fw={700}>
+                        {genre.name}
+                      </Text>
+                      <Text size="sm">{genre.count} titles</Text>
+                    </Box>
+                    <FaChevronRight style={{ height: ".7em" }} />
+                  </Flex>
+                </Card>
+              )
+          )}
       </SimpleGrid>
     </Stack>
   );

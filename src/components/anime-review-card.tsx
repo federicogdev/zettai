@@ -37,7 +37,11 @@ const AnimeReviewCard = ({ review }: IAnimeReviewCardProps) => {
           ? review.review
           : `${review.review.substring(0, 450)}...`}
         {!hasMore && (
-          <Text color="primary" onClick={() => setShowMore(!showMore)}>
+          <Text
+            color="primary"
+            onClick={() => setShowMore(!showMore)}
+            style={{ cursor: "pointer" }}
+          >
             {showMore ? "Show Less" : "Read More"}
           </Text>
         )}

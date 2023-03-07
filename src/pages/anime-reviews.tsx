@@ -24,7 +24,7 @@ const AnimeReviewsPage = (props: Props) => {
     queryFn: () => fetchAnimeReviews(id!),
   });
   return (
-    <Stack py={20} spacing={50}>
+    <Stack py={20} spacing={50} mih="90vh">
       {isAnimesReviewsLoading ? (
         <Center mih="90vh">
           <Loader />

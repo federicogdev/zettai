@@ -133,7 +133,7 @@ const Navbar = () => {
           <Avatar
             radius="xl"
             size="md"
-            src="/logo.jpg"
+            src="/logo.png"
             alt=""
             component={Link}
             to="/"

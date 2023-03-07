@@ -60,7 +60,7 @@ const TopAnimesPage = (props: Props) => {
   });
 
   return (
-    <Stack py={20} spacing={50}>
+    <Stack py={20} spacing={50} mih="90vh">
       <Flex justify="space-between" align="center">
         <Text fw={700} fz="xl">
           Results: {animesLengthData?.pagination?.items?.total}
@@ -74,10 +74,10 @@ const TopAnimesPage = (props: Props) => {
             setTopAnimesPage(1);
           }}
           data={[
+            { value: "favorite", label: "Favourites" },
             { value: "airing", label: "Airing" },
             { value: "upcoming", label: "Upcoming" },
             { value: "bypopularity", label: "Popular" },
-            { value: "favorite", label: "Favourites" },
           ]}
         />
       </Flex>

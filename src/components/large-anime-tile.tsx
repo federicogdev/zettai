@@ -14,7 +14,7 @@ const LargeAnimeTile = ({ anime }: ILargeAnimeTileProps) => {
       <Grid.Col xs={12} sm={3}>
         <Link to={`/anime/${anime.mal_id}`}>
           <Image
-            src={anime.images.jpg.image_url}
+            src={anime.images.jpg.large_image_url}
             radius={7}
             fit="fill"
             w="100%"

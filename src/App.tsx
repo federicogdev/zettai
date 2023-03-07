@@ -6,6 +6,7 @@ import TopAnimesPage from "./pages/top-animes";
 import HomePage from "./pages/home";
 import SearchPage from "./pages/search";
 import AnimesPage from "./pages/animes";
+import NotFoundPage from "./pages/not-found";
 
 type Props = {};
 
@@ -18,6 +19,7 @@ const App = (props: Props) => {
       <Route path="/anime/:id" element={<AnimeDetailsPage />} />
       <Route path="/anime/:id/reviews" element={<AnimeReviewsPage />} />
       <Route path="/search" element={<SearchPage />} />
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 };

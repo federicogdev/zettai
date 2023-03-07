@@ -7,6 +7,7 @@ import CustomFonts from "./theme/fonts";
 import Navbar from "./components/navbar";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { AnimesPaginationContextProvider } from "./context/animes-pagination-context";
+import { Footer } from "./components/footer";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -73,6 +74,7 @@ root.render(
           <Container size="md">
             <App />
           </Container>
+          <Footer />
         </BrowserRouter>
       </MantineProvider>
     </QueryClientProvider>

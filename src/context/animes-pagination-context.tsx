@@ -14,7 +14,7 @@ type AnimesPaginationContextState = {
 };
 
 const contextDefaultValue: AnimesPaginationContextState = {
-  topAnimesFilter: "airing",
+  topAnimesFilter: "favorite",
   topAnimesPage: 1,
   queryAnimesPage: 1,
   setTopAnimesFilter: () => {},

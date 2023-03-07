@@ -1,14 +1,4 @@
-import {
-  Center,
-  Flex,
-  Grid,
-  Loader,
-  Paper,
-  Stack,
-  Text,
-  Image,
-  Card,
-} from "@mantine/core";
+import { Center, Flex, Grid, Loader, Stack, Text } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import Error from "../components/error";
 
@@ -55,27 +45,18 @@ const AnimeDetailsPage = (props: Props) => {
   });
 
   if (isAnimesDetailsLoading || isAnimesReviewsLoading) {
-    <Center p={40}>
+    <Center p={40} mih="90vh">
       <Loader />
     </Center>;
   }
   if (isAnimesDetailsError || isAnimesReviewsError) {
-    <Center p={40}>
+    <Center p={40} mih="90vh">
       <Error />
     </Center>;
   }
 
   return (
-    <Stack py={20} spacing={50}>
-      {/* {isAnimesDetailsLoading || isAnimesReviewsLoading ? (
-        <Center p={40}>
-          <Loader />
-        </Center>
-      ) : isAnimesDetailsError || isAnimesReviewsError ? (
-        <Center mih="90vh">
-          <Error />
-        </Center>
-      ) : ( */}
+    <Stack py={20} spacing={50} mih="90vh">
       <Grid gutter={20}>
         {animesDetails && (
           <>
@@ -107,14 +88,13 @@ const AnimeDetailsPage = (props: Props) => {
               </Text>
             </Flex>
             <Stack>
-              {animesReviews.data?.slice(0, 5).map((review, key) => (
+              {animesReviews.data?.slice(0, 5).map((review) => (
                 <AnimeReviewCard review={review} key={review.mal_id} />
               ))}
             </Stack>
           </Grid.Col>
         )}
       </Grid>
-      {/* )} */}
     </Stack>
   );
 };

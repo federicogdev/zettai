@@ -81,7 +81,7 @@ const AnimesPage = (props: Props) => {
   });
 
   return (
-    <Stack py={20} spacing={50}>
+    <Stack py={20} spacing={50} mih="90vh">
       {isAnimesDataLoading ? (
         <Center p={40}>
           <Loader />
