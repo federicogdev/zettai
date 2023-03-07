@@ -88,8 +88,8 @@ const AnimeDetailsPage = (props: Props) => {
                 </Text>
               </Flex>
               <Stack>
-                {animesReviews.data?.slice(0, 5).map((review) => (
-                  <AnimeReviewCard review={review} />
+                {animesReviews.data?.slice(0, 5).map((review, key) => (
+                  <AnimeReviewCard review={review} key={review.mal_id} />
                 ))}
               </Stack>
             </Grid.Col>

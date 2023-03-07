@@ -37,11 +37,10 @@ const AnimeDetailsOverview = ({ anime }: IAnimeDetailsOverviewProps) => {
             <iframe
               src={`https://www.youtube.com/embed/${anime.trailer.youtube_id}`}
               title="YouTube video player"
-              frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
             />
-          </AspectRatio>{" "}
+          </AspectRatio>
         </Stack>
       )}
 

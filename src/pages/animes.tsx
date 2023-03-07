@@ -82,6 +82,7 @@ const AnimesPage = (props: Props) => {
 
   return (
     <Stack py={20} spacing={50}>
+      <Text>Q = {query}</Text>
       {isAnimesDataLoading ? (
         <Center p={40}>
           <Loader />

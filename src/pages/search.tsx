@@ -51,7 +51,7 @@ const SearchPage = (props: Props) => {
           e.preventDefault();
           if (query !== "") {
             setQueryAnimesPage(1);
-            navigate(`/anime?q=${query.replace(/\s+/g, "%20")}`);
+            navigate(`/anime?q=${query.replace(/\s+/g, `+`)}`);
           }
         }}
       >
@@ -92,8 +92,9 @@ const SearchPage = (props: Props) => {
           .sort((a, b) => {
             return b.count - a.count;
           })
-          .map((genre, i) => (
+          .map((genre) => (
             <Card
+              key={genre.mal_id}
               p={10}
               component={Link}
               to={`/anime?genres=${genre.mal_id}`}

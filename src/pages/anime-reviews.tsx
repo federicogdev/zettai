@@ -45,7 +45,7 @@ const AnimeReviewsPage = (props: Props) => {
               <Grid.Col xs={12}>
                 <Stack>
                   {animesReviews.data.map((review) => (
-                    <AnimeReviewCard review={review} />
+                    <AnimeReviewCard review={review} key={review.mal_id} />
                   ))}
                 </Stack>
               </Grid.Col>
